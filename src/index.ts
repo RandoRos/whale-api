@@ -1,9 +1,7 @@
-// import express from 'express';
 import Fastify from 'fastify';
 import dotenv from 'dotenv';
-dotenv.config();
-
 import { AddressInfo } from 'net';
+dotenv.config();
 
 const app = Fastify({ logger: true });
 
