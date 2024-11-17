@@ -20,7 +20,11 @@ app.get('/healthcheck', async () => {
 
 async function start() {
   try {
-    const redisClient = await createClient();
+    const port = process.env.REDIS_PORT || 6379;
+    const host = process.env.REDIS_HOST || 'localhost';
+    const redisClient = await createClient({
+      url: `redis://${host}:${port}`,
+    });
     await redisClient.connect();
 
     app.decorate('redis', redisClient as RedisClientType);
