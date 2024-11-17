@@ -1,4 +1,5 @@
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
 import { RedisClientType, createClient } from 'redis';
 import dotenv from 'dotenv';
 import { AddressInfo } from 'net';
@@ -9,6 +10,7 @@ import auth from './middlewares/auth';
 
 const app = Fastify({ logger: true });
 
+app.register(cors);
 app.register(priceRoutes, { prefix: 'api/prices' });
 app.addHook('preHandler', auth);
 
