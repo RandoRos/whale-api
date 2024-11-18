@@ -1,17 +1,11 @@
-import Fastify from 'fastify';
-import cors from '@fastify/cors';
-import { RedisClientType, createClient } from 'redis';
+import buildApp from './app';
 import dotenv from 'dotenv';
 import { AddressInfo } from 'net';
 dotenv.config();
 
-import priceRoutes from './routes/price.routes';
 import auth from './middlewares/auth';
 
-const app = Fastify({ logger: true });
-
-app.register(cors);
-app.register(priceRoutes, { prefix: 'api/prices' });
+const app = buildApp();
 app.addHook('preHandler', auth);
 
 app.get('/healthcheck', async () => {
@@ -20,15 +14,6 @@ app.get('/healthcheck', async () => {
 
 async function start() {
   try {
-    const port = process.env.REDIS_PORT || 6379;
-    const host = process.env.REDIS_HOST || 'localhost';
-    const redisClient = await createClient({
-      url: `redis://${host}:${port}`,
-    });
-    await redisClient.connect();
-
-    app.decorate('redis', redisClient as RedisClientType);
-
     await app.listen({
       port: Number(process.env.PORT) || 3000,
       host: '0.0.0.0',
