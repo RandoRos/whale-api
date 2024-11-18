@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    container_name: whale-app
+    container_name: api
     ports:
       - '3001:3001'
     depends_on:
