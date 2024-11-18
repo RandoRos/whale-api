@@ -11,7 +11,7 @@ export const getOrSetCache = async (
     const data = await fn();
     await redisClient.SETEX(
       key,
-      Number(process.env.CACHE_EXPIRATION_TTL!),
+      Number(process.env.CACHE_EXPIRATION_TTL || 600),
       JSON.stringify(data)
     );
     return data;

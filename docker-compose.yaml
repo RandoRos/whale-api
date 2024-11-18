@@ -6,6 +6,11 @@ services:
       - '3001:3001'
     depends_on:
       - redis
+    environment:
+      - PORT=3001
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CACHE_EXPIRATION_TTL=600
     env_file:
       - .env
 
