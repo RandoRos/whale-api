@@ -22,10 +22,12 @@ const buildApp = () => {
   app.register(import('@fastify/cors'));
   app.register(autoload, {
     dir: path.join(__dirname, 'plugins'),
+    ignorePattern: /.*\.(test|spec)\.[tj]s$/,
   });
   app.register(autoload, {
     dir: path.join(__dirname, 'routes'),
     options: { prefix: '/api/' },
+    ignorePattern: /.*\.(test|spec)\.[tj]s$/,
   });
 
   return app;

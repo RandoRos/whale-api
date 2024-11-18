@@ -10,5 +10,6 @@
     "strict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
-  }
+  },
+  "exclude": ["node_modules", "__test__"]
 }

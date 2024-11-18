@@ -12,18 +12,10 @@ export const getAllPrices = async (
   redisClient: RedisClientType
 ) => {
   try {
-    const cachedResults = await redisClient.get('prices');
-    if (cachedResults) {
-      return JSON.parse(cachedResults);
-    } else {
-      const resp = await fetchTokenPriceFromProvider(CoinMarketCapProvider);
-      await redisClient.SETEX(
-        'prices',
-        Number(process.env.CACHE_EXPIRATION_TTL!),
-        JSON.stringify(resp)
-      );
-      return resp;
-    }
+    const data = await getOrSetCache(redisClient, 'prices', async () => {
+      return await fetchTokenPriceFromProvider(CoinMarketCapProvider)
+    });
+    return data;
   } catch (error) {
     console.error(error);
     reply.status(500).send('Internal Server Error');
