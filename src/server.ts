@@ -3,14 +3,7 @@ import dotenv from 'dotenv';
 import { AddressInfo } from 'net';
 dotenv.config();
 
-import auth from './middlewares/auth';
-
 const app = buildApp();
-app.addHook('preHandler', auth);
-
-app.get('/healthcheck', async () => {
-  return { status: 'OK' };
-});
 
 async function start() {
   try {

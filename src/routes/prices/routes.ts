@@ -1,15 +1,8 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
-import { RedisClientType } from 'redis';
 import {
   getAllPrices,
   getTokenPrice,
 } from '../../controllers/price.controller';
-
-declare module 'fastify' {
-  interface FastifyInstance {
-    redis: RedisClientType;
-  }
-}
 
 export default async function (
   fastify: FastifyInstance,
